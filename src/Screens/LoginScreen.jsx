@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import backgroungLogin from "../../assets/background_signin.jpg";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -50,7 +50,9 @@ const LoginScreen = () => {
 
           <View className='flex-row space-x-6 w-full justify-center'>
             <Text>Don't have an account ?</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={()=>navigation.navigate('SignupScreen')}
+            >
                 <Text className='text-[#d60e45]'>
                     SignUp
                 </Text>
