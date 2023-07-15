@@ -1,11 +1,29 @@
-import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, Image, TextInput, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import backgroungLogin from "../../assets/background_signin.jpg";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/config";
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSignIn = async() => {
+    try {
+      if(email !== '' && password !== ""){
+        const response = await signInWithEmailAndPassword(auth, email, password)
+        if(response){
+          console.log(response, 'SUCCESS');
+        }
+      }else{
+        Alert.alert('all fields are required')
+      }
+    } catch (error) {
+      console.log(error, 'FAILURE');
+    }
+  }
+
   return (
     <>
       <KeyboardAwareScrollView className='bg-black'>
@@ -44,7 +62,7 @@ const LoginScreen = ({navigation}) => {
             />
           </View>
 
-          <TouchableOpacity className="bg-[#fac25a] py-2 rounded-md mx-10 mt-16 mb-3">
+          <TouchableOpacity className="bg-[#fac25a] py-2 rounded-md mx-10 mt-16 mb-3" onPress={handleSignIn}>
             <Text className="text-center font-semibold text-lg text-white">LogIn</Text>
           </TouchableOpacity>
 
